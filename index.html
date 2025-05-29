@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Salud - Panel de Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2c5aa0;
+            --secondary-blue: #1e3d72;
+            --light-blue: #e3f2fd;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --info-cyan: #17a2b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        .header-dashboard {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-dashboard {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            border: none;
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            height: 100%;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .icon-blue { background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); }
+        .icon-green { background: linear-gradient(135deg, var(--success-green), #20c997); }
+        .icon-orange { background: linear-gradient(135deg, var(--warning-orange), #e55a4f); }
+        .icon-cyan { background: linear-gradient(135deg, var(--info-cyan), #138496); }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .quick-action-btn {
+            border-radius: 10px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            background: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--primary-blue);
+            display: block;
+            height: 100%;
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-blue);
+            color: var(--secondary-blue);
+            transform: translateY(-3px);
+        }
+
+        .appointment-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-blue);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .appointment-date {
+            background: var(--light-blue);
+            border-radius: 8px;
+            padding: 0.5rem;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .result-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--success-green);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending { background-color: #fff3cd; color: #856404; }
+        .status-completed { background-color: #d4edda; color: #155724; }
+        .status-available { background-color: #d1ecf1; color: #0c5460; }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--light-blue), #ffffff);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-dashboard {
+                padding: 1rem 0;
+            }
+            
+            .dashboard-card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-dashboard">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0">
+                        <i class="fas fa-tachometer-alt me-3"></i>
+                        Bienvenido al Panel del Centro de Salud
+                    </h1>
+                    <p class="mb-0 mt-2 opacity-75">Gestiona tu salud de manera fácil y segura</p>
+                </div>
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <span class="me-3">
+                        <i class="fas fa-user-circle me-2"></i>
+                        <span id="userName">Usuario</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navbar -->
+    <nav class="navbar-dashboard">
+        <div class="container">
+            <div class="row w-100 align-items-center">
+                <div class="col-md-8">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item">
+                                <a href="index.html" class="text-decoration-none">
+                                    <i class="fas fa-home me-1"></i>Inicio
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">Panel de Usuario</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button class="btn btn-logout" onclick="logout()">
+                        <i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-4">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2 class="mb-3">¡Hola! Nos alegra verte de nuevo</h2>
+            <p class="lead mb-0">Desde aquí puedes gestionar tus citas, consultar resultados y acceder a todos nuestros servicios.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="dashboard-card p-3 text-center">
+                    <div class="card-icon icon-blue mx-auto">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number">3</div>
+                    <p class="mb-0 text-muted">Próximas Citas</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="dashboard-card p-3 text-center">
+                    <div class="card-icon icon-green mx-auto">
+                        <i class="fas fa-file-medical-alt"></i>
+                    </div>
+                    <div class="stat-number">2</div>
+                    <p class="mb-0 text-muted">Resultados Disponibles</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="dashboard-card p-3 text-center">
+                    <div class="card-icon icon-orange mx-auto">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="stat-number">1</div>
+                    <p class="mb-0 text-muted">Recetas Activas</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="dashboard-card p-3 text-center">
+                    <div class="card-icon icon-cyan mx-auto">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="stat-number">12</div>
+                    <p class="mb-0 text-muted">Consultas Este Año</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="row">
+            <!-- Próximas Citas -->
+            <div class="col-lg-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <h4 class="section-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Próximas Citas
+                    </h4>
+                    
+                    <div class="appointment-item">
+                        <div class="d-flex align-items-center">
+                            <div class="appointment-date me-3">
+                                <div class="fw-bold">15</div>
+                                <small>ENE</small>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Consulta General</h6>
+                                <p class="mb-1 text-muted">Dr. García - 10:30 AM</p>
+                                <span class="status-badge status-pending">Confirmada</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="appointment-item">
+                        <div class="d-flex align-items-center">
+                            <div class="appointment-date me-3">
+                                <div class="fw-bold">22</div>
+                                <small>ENE</small>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Cardiología</h6>
+                                <p class="mb-1 text-muted">Dr. Martínez - 2:00 PM</p>
+                                <span class="status-badge status-pending">Pendiente</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="appointment-item">
+                        <div class="d-flex align-items-center">
+                            <div class="appointment-date me-3">
+                                <div class="fw-bold">28</div>
+                                <small>ENE</small>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Laboratorio</h6>
+                                <p class="mb-1 text-muted">Análisis de sangre - 8:00 AM</p>
+                                <span class="status-badge status-completed">Programada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Últimos Resultados -->
+            <div class="col-lg-6 mb-4">
+                <div class="dashboard-card p-4">
+                    <h4 class="section-title">
+                        <i class="fas fa-file-medical"></i>
+                        Últimos Resultados
+                    </h4>
+                    
+                    <div class="result-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Hemograma Completo</h6>
+                                <p class="mb-1 text-muted">Realizado: 10 Enero 2024</p>
+                                <span class="status-badge status-available">Disponible</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Radiografía de Tórax</h6>
+                                <p class="mb-1 text-muted">Realizado: 5 Enero 2024</p>
+                                <span class="status-badge status-available">Disponible</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="result-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6 class="mb-1">Perfil Lipídico</h6>
+                                <p class="mb-1 text-muted">En proceso...</p>
+                                <span class="status-badge status-pending">Procesando</span>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary" disabled>
+                                <i class="fas fa-clock"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accesos Rápidos -->
+        <div class="row">
+            <div class="col-12">
+                <div class="dashboard-card p-4">
+                    <h4 class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        Accesos Rápidos
+                    </h4>
+                    
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="#" class="quick-action-btn" onclick="showAgendarCita()">
+                                <div class="text-center">
+                                    <i class="fas fa-calendar-plus fa-2x mb-2"></i>
+                                    <h6 class="mb-1">Agendar Cita</h6>
+                                    <small class="text-muted">Programa una nueva consulta</small>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="#" class="quick-action-btn" onclick="showResultados()">
+                                <div class="text-center">
+                                    <i class="fas fa-search fa-2x mb-2"></i>
+                                    <h6 class="mb-1">Ver Resultados</h6>
+                                    <small class="text-muted">Consulta tus análisis</small>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="#" class="quick-action-btn" onclick="showContacto()">
+                                <div class="text-center">
+                                    <i class="fas fa-phone fa-2x mb-2"></i>
+                                    <h6 class="mb-1">Contacto</h6>
+                                    <small class="text-muted">Comunícate con nosotros</small>
+                                </div>
+                            </a>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6 mb-3">
+                            <a href="#" class="quick-action-btn" onclick="showPerfil()">
+                                <div class="text-center">
+                                    <i class="fas fa-user-cog fa-2x mb-2"></i>
+                                    <h6 class="mb-1">Mi Perfil</h6>
+                                    <small class="text-muted">Actualiza tus datos</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Función para cerrar sesión
+        function logout() {
+            if (confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+                alert('Sesión cerrada exitosamente. ¡Hasta pronto!');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Funciones para accesos rápidos
+        function showAgendarCita() {
+            alert('Redirigiendo a la sección de agendar citas...');
+            window.location.href = 'index.html#citas';
+        }
+
+        function showResultados() {
+            alert('Consultando resultados disponibles...');
+            // Simular carga de resultados
+            setTimeout(() => {
+                alert('Mostrando resultados médicos más recientes.');
+            }, 1000);
+        }
+
+        function showContacto() {
+            alert('Redirigiendo a información de contacto...');
+            window.location.href = 'index.html#contacto';
+        }
+
+        function showPerfil() {
+            alert('Abriendo configuración de perfil...');
+            // Simular apertura de modal de perfil
+            setTimeout(() => {
+                alert('Aquí podrías actualizar tu información personal, cambiar contraseña, etc.');
+            }, 500);
+        }
+
+        // Establecer nombre de usuario dinámicamente
+        window.addEventListener('load', function() {
+            const userName = localStorage.getItem('userName') || 'Usuario';
+            document.getElementById('userName').textContent = userName;
+            
+            // Animación de entrada para las tarjetas
+            const cards = document.querySelectorAll('.dashboard-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.5s ease';
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Actualizar fecha y hora en tiempo real
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const dateTimeString = now.toLocaleDateString('es-ES', options);
+            
+            // Si existe un elemento para mostrar fecha/hora
+            const dateTimeElement = document.getElementById('currentDateTime');
+            if (dateTimeElement) {
+                dateTimeElement.textContent = dateTimeString;
+            }
+        }
+
+        // Actualizar cada minuto
+        setInterval(updateDateTime, 60000);
+        updateDateTime(); // Llamar inmediatamente
+
+        // Simular notificaciones
+        setTimeout(() => {
+            if (Math.random() > 0.7) {
+                alert('💊 Recordatorio: Tienes una cita programada para mañana a las 10:30 AM');
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

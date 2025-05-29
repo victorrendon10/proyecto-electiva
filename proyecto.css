@@ -1,0 +1,150 @@
+/* =====================================================
+   PROYECTO.CSS
+   Hoja de estilos completa y documentada
+   ===================================================== */
+
+/* -----------------------------------------------------
+   1. Estilos globales del body
+   ----------------------------------------------------- */
+   body {
+    font-family: Arial, sans-serif; /* Fuente principal */
+    margin: 0;                      /* Elimina margenes del navegador */
+    padding: 0;                     /* Elimina relleno del navegador */
+    background-color: #f2fdfb;      /* Color de fondo muy suave */
+    color: #333;                    /* Color de texto oscuro para legibilidad */
+  }
+  
+  /* -----------------------------------------------------
+     2. Header principal
+     ----------------------------------------------------- */
+  header {
+    background-color: #1e88e5; /* Azul vibrante */
+    color: white;              /* Texto en blanco */
+    padding: 20px;             /* Relleno interno */
+    text-align: center;        /* Texto centrado */
+    margin: 0;                 /* Elimina márgenes adicionales */
+  }
+  
+  /* -----------------------------------------------------
+     3. Barra de navegación
+     ----------------------------------------------------- */
+  nav {
+    background-color: #1e88e5;   /* Azul oscuro */
+    display: flex;               /* Flexbox para centrar enlaces */
+    justify-content: center;     /* Alinea enlaces horizontalmente */
+    gap: 20px;                   /* Espacio entre enlaces */
+    padding: 10px;               /* Relleno interno */
+  }
+  
+  nav a {
+    color: white;               /* Enlaces en blanco */
+    text-decoration: none;      /* Sin subrayado */
+    font-weight: bold;          /* Texto negrita */
+  }
+  
+  /* -----------------------------------------------------
+     4. Secciones generales
+     ----------------------------------------------------- */
+  section {
+    padding: 20px; /* Relleno para separar contenido */
+  }
+  
+  /* -----------------------------------------------------
+     5. Footer fijo inferior
+     ----------------------------------------------------- */
+  footer {
+    background-color: #1e88e5; /* Azul vibrante (igual al header) */
+    color: white;              /* Texto en blanco */
+    text-align: center;        /* Texto centrado */
+    padding: 10px;             /* Relleno interno */
+    position: fixed;           /* Posición fija */
+    width: 100%;               /* Ancho completo */
+    bottom: 0;                 /* Pegado al borde inferior */
+  }
+  
+  /* -----------------------------------------------------
+     6. Botones genéricos (.btn)
+     ----------------------------------------------------- */
+  .btn {
+    display: inline-block;          /* Para respetar padding y margin */
+    background-color: #1e88e5;      /* Verde principal */
+    color: white;                   /* Texto blanco */
+    padding: 10px 20px;             /* Relleno interno */
+    margin-top: 10px;               /* Separación superior */
+    text-decoration: none;          /* Sin subrayado */
+    border-radius: 5px;             /* Bordes redondeados */
+    font-weight: bold;              /* Texto en negrita */
+  }
+  
+  /* -----------------------------------------------------
+     7. Estilos básicos para inputs y selects
+     ----------------------------------------------------- */
+  input, select {
+    padding: 8px;         /* Relleno interno */
+    margin: 5px 0;        /* Separación vertical */
+    width: 100%;          /* Ocupan todo el contenedor */
+    font-size: 16px;      /* Tamaño de letra cómodo */
+    border: 1px solid #ccc; /* Borde ligero */
+    border-radius: 4px;   /* Bordes suaves */
+  }
+  
+  /* Hover para botones .btn (contraste de color) */
+  .btn:hover {
+    background-color: #1e88e5; /* Azul oscuro al pasar sobre .btn con .btn-primary */
+  }
+  
+  /* -----------------------------------------------------
+     8. Contenedor dual de formularios (lado a lado)
+     ----------------------------------------------------- */
+  .formulario-dual {
+    display: flex;              /* Flexbox para columnas */
+    justify-content: center;    /* Centrado horizontal */
+    align-items: flex-start;    /* Alineación al inicio vertical */
+    gap: 40px;                  /* Espacio entre formularios */
+    flex-wrap: wrap;            /* Se adaptan en pantallas pequeñas */
+    padding: 20px;              /* Relleno interno alrededor */
+  }
+  
+  /* Asegura mismo estilo de caja para ambos formularios */
+  .form-container,
+  .resultado-form {
+    flex: 1 1 400px;            /* Crecen y encogen, ancho base 400px */
+    background-color: #f9f9f9;  /* Fondo ligero para destacarlos */
+    padding: 20px;              /* Relleno interno */
+    border-radius: 8px;         /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra suave */
+    max-width: 500px;           /* Ancho máximo para no desbordar */
+    width: 100%;                /* Ocupa todo disponible dentro de max-width */
+  }
+  
+  /* -----------------------------------------------------
+     9. Contenedor específico para formulario de cita
+     (puede usarse si hace falta centrar solo ese formulario)
+     ----------------------------------------------------- */
+  .form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* padding ya definido arriba en .formulario-dual */
+  }
+  
+  /* -----------------------------------------------------
+     10. Estilo interno de <form> general
+     ----------------------------------------------------- */
+  form {
+    display: flex;                 /* Flex para organizar campos */
+    flex-direction: column;        /* Campos en columna */
+    gap: 15px;                     /* Espacio entre campos */
+  }
+  
+  /* -----------------------------------------------------
+     11. Contenedor específico para formulario de resultados
+     ----------------------------------------------------- */
+  .resultado-form input {
+    /* Hereda estilos de input genérico */
+  }
+  
+  /* -----------------------------------------------------
+     ¡Fin de proyecto.css!
+     ----------------------------------------------------- */
+  
